@@ -32,14 +32,19 @@ defmodule SocializeWeb.Router do
 
   scope "/", SocializeWeb do
     pipe_through [:browser, :protected]
-
+    get "/new", ProfileController, :new
     # Add your protected routes here
   end
 
   scope "/", SocializeWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", ProfileController, :index
+    get "/index", ProfileController, :index
+    get "/profile/:id", ProfileController, :show
+    post "/profile", ProfileController, :create
+    put "/profile/:id", ProfileController, :edit
+    delete "/profile/:id", ProfileController, :delete
   end
 
   # Other scopes may use custom stacks.

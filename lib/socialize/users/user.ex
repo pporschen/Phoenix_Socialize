@@ -4,7 +4,7 @@ defmodule Socialize.Users.User do
 
   schema "users" do
     pow_user_fields()
-
+    has_many :profiles, Socialize.Profiles.Profile
     timestamps()
   end
 end
