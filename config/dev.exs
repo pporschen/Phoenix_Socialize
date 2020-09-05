@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :socialize, Socialize.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "superuser",
   database: "socialize_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
