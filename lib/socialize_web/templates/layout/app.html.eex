@@ -5,26 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Socialize · Phoenix Framework</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
     <header>
-      <section class="container">
-        <nav role="navigation">
-          <ul>
-           <%= if @conn.assigns.current_user do%>
-            <li><%= @conn.assigns.current_user.email %></li>
-            <li><%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></li>
-          <% else %>
-            <li><%= link "Sign in", to: Routes.pow_session_path(@conn, :new)%></li>
-          <% end %>
+      <nav>
+        <div class="nav-wrapper blue">
+          <a href="#" class="brand-logo center">SOCIALIZE</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <%= if @conn.assigns.current_user do%>
+                <li><%= link @conn.assigns.current_user.email, to: Routes.pow_session_path(@conn, :delete), method: :delete %></li>
+                <li><%= link "Sign out", to: Routes.pow_session_path(@conn, :delete), method: :delete %></li>
+              <% else %>
+                <li><%= link "Sign in", to: Routes.pow_session_path(@conn, :new)%></li>
+              <% end %>
           </ul>
-        </nav>
-        <a href="https://phoenixframework.org/" class="phx-logo">
-          <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
-        </a>
-      </section>
+        </div>
+        </nav> 
     </header>
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

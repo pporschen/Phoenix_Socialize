@@ -1,5 +1,7 @@
 defmodule SocializeWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :socialize
+  use Pow.Phoenix.Router
+  
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
@@ -16,6 +18,8 @@ defmodule SocializeWeb.Endpoint do
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
+  
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
@@ -23,8 +27,8 @@ defmodule SocializeWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :socialize,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: true,
+    only: ~w(css fonts images js favicon.ico robots.txt files)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -52,4 +56,5 @@ defmodule SocializeWeb.Endpoint do
   plug Plug.Session, @session_options
   plug Pow.Plug.Session, otp_app: :socialize
   plug SocializeWeb.Router
+
 end

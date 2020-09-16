@@ -19,11 +19,6 @@ defmodule SocializeWeb.Router do
       error_handler: Pow.Phoenix.PlugErrorHandler
   end
 
-  pipeline :protected do
-    plug Pow.Plug.RequireAuthenticated,
-      error_handler: Pow.Phoenix.PlugErrorHandler
-  end
-
   scope "/" do
     pipe_through :browser
 
@@ -33,18 +28,21 @@ defmodule SocializeWeb.Router do
   scope "/", SocializeWeb do
     pipe_through [:browser, :protected]
     get "/new", ProfileController, :new
+    get "/", ProfileController, :index
+    get "/index", ProfileController, :index
+    get "/profile/:id", ProfileController, :show
+    post "/profile", ProfileController, :create
+    get "/profile/:id/edit", ProfileController, :edit
+    put "/profile/:id/update", ProfileController, :update
+    delete "/profile/:id", ProfileController, :delete
+    
     # Add your protected routes here
   end
 
   scope "/", SocializeWeb do
     pipe_through :browser
 
-    get "/", ProfileController, :index
-    get "/index", ProfileController, :index
-    get "/profile/:id", ProfileController, :show
-    post "/profile", ProfileController, :create
-    put "/profile/:id", ProfileController, :edit
-    delete "/profile/:id", ProfileController, :delete
+    
   end
 
   # Other scopes may use custom stacks.

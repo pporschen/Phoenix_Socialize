@@ -3,9 +3,13 @@ defmodule SocializeWeb.ProfileController do
 
   alias Socialize.Profiles
   alias Socialize.Profiles.Profile
+  alias Socialize.Repo
+
+  plug :is_allowed_to_visit when action in [:edit, :delete, :update]
 
   def index(conn, _params) do
     profiles = Profiles.list_profiles()
+    IO.inspect(profiles)
     render(conn, "index.html", profiles: profiles)
   end
 
@@ -17,8 +21,15 @@ defmodule SocializeWeb.ProfileController do
   end
 
   def create(conn, %{"profile" => profile_params} = params) do
-    IO.inspect(params)
+     
+    
+    if upload = profile_params["photo"] do
+      IO.puts "jjjjjj"
+      extension = Path.extname(upload.filename)
+      File.cp(upload.path, "./priv/static/files/#{profile_params["id"]}-profile#{extension}")
+    end
     changeset = conn.assigns.current_user
+    
     case Profiles.create_profile(changeset, profile_params) do
       {:ok, profile} ->
         conn
@@ -62,5 +73,18 @@ defmodule SocializeWeb.ProfileController do
     conn
     |> put_flash(:info, "Profile deleted successfully.")
     |> redirect(to: Routes.profile_path(conn, :index))
+  end
+
+  defp is_allowed_to_visit(%Plug.Conn{params: %{"id" => id}} = conn, params) do
+    res = Repo.get(Profile, id).user_id
+  
+    if res == conn.assigns.current_user.id do
+      conn
+    else
+      conn
+      |> put_flash(:info, "Nope.")
+      |> redirect(to: Routes.profile_path(conn, :index))
+      |> halt()
+    end
   end
 end

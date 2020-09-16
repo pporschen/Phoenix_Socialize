@@ -99,3 +99,22 @@ header nav a {
     margin: 2rem 1rem;
   }
 }
+
+.avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.avatar-show {
+  vertical-align: middle;
+  width:200px;
+ height: 200px;
+  border-radius: 50%;
+  margin: 5%;
+}
+
+.profile-container{
+  text-align: center;
+}

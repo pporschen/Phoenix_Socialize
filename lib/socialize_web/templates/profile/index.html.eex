@@ -1,8 +1,17 @@
-<h1>Listing Profiles</h1>
+<h1>My Profiles</h1>
+<span><%= link "ADD PROFILE", to: Routes.profile_path(@conn, :new), class: "btn waves-effect waves-light blue right" %></span>
 
-<table>
+<table style="width: 100%">
+  <colgroup>
+       <col span="1" style="width: 15%;">
+       <col span="1" style="width: 20%;">
+       <col span="1" style="width: 20%;">
+       <col span="1" style="width: 5%;">
+       <col span="1" style="width: 40%;">
+  </colgroup>
   <thead>
     <tr>
+      <th></th>
       <th>First name</th>
       <th>Name</th>
       <th>Age</th>
@@ -12,19 +21,63 @@
   </thead>
   <tbody>
 <%= for profile <- @profiles do %>
+  <%= if profile.user_id == @conn.assigns.current_user.id do %>
     <tr>
+      <td><img src="https://www.w3schools.com/w3images/avatar5.png" class="avatar" alt="Avatar"></td>
       <td><%= profile.first_name %></td>
       <td><%= profile.name %></td>
       <td><%= profile.age %></td>
 
       <td>
-        <span><%= link "Show", to: Routes.profile_path(@conn, :show, profile) %></span>
-        <span><%= link "Edit", to: Routes.profile_path(@conn, :edit, profile) %></span>
-        <span><%= link "Delete", to: Routes.profile_path(@conn, :delete, profile), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <span><%= link "Open", to: Routes.profile_path(@conn, :show, profile), class: "btn waves-effect waves-light blue" %></span>
+        <span><%= link "Edit", to: Routes.profile_path(@conn, :edit, profile), class: "btn waves-effect waves-light blue" %></span>
+        <span><%= link "Delete", to: Routes.profile_path(@conn, :delete, profile), method: :delete, data: [confirm: "Are you sure?"], class: "btn waves-effect waves-light blue" %></span>
       </td>
     </tr>
+  <% end %>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Profile", to: Routes.profile_path(@conn, :new) %></span>
+
+
+
+<div style="margin-top: 5%">
+  <h1>Other Profiles</h1>
+
+  <table style="width: 100%">
+    <colgroup>
+       <col span="1" style="width: 15%;">
+       <col span="1" style="width: 20%;">
+       <col span="1" style="width: 20%;">
+       <col span="1" style="width: 5%;">
+       <col span="1" style="width: 40%;">
+    </colgroup>
+    <thead>
+      <tr>
+        <th></th>
+        <th>First name</th>
+        <th>Name</th>
+        <th>Age</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+  <%= for profile <- @profiles do %>
+  <%= if profile.user_id != @conn.assigns.current_user.id do %>
+      <tr>
+        <td><img src="https://www.w3schools.com/w3images/avatar5.png" class="avatar" alt="Avatar"></td>
+        <td><%= profile.first_name %></td>
+        <td><%= profile.name %></td>
+        <td><%= profile.age %></td>
+
+        <td style="color: red">
+          <span><%= link "Open", to: Routes.profile_path(@conn, :show, profile), class: "btn waves-effect waves-light blue" %></span>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+    </tbody>
+  </table>
+</div>

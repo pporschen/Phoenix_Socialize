@@ -1,23 +1,30 @@
-<h1>Show Profile</h1>
+<div class= "profile-container">
+  <%= if File.exists?("./priv/static/files/#{@profile.id}-profile.JPG") do%>
+    <td><%= img_tag(Routes.static_path(@conn, "/files/#{@profile.id}-profile.JPG"), class: "avatar-show")%></td>
+  <% else %>
+    <td><%= img_tag(Routes.static_path(@conn, "/files/img_avatar.png"), class: "avatar-show")%></td>
+  <% end %>
+  <ul>
 
-<ul>
 
-  <li>
-    <strong>First name:</strong>
-    <%= @profile.first_name %>
-  </li>
+    <li>
+      <strong>First name:</strong>
+      <%= @profile.first_name %>
+    </li>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @profile.name %>
-  </li>
+    <li>
+      <strong>Name:</strong>
+      <%= @profile.name %>
+    </li>
 
-  <li>
-    <strong>Age:</strong>
-    <%= @profile.age %>
-  </li>
+    <li>
+      <strong>Age:</strong>
+      <%= @profile.age %>
+    </li>
 
-</ul>
-
-<span><%= link "Edit", to: Routes.profile_path(@conn, :edit, @profile) %></span>
+  </ul>
+  <span><%= link "Edit", to: Routes.profile_path(@conn, :edit, @profile) %></span>
 <span><%= link "Back", to: Routes.profile_path(@conn, :index) %></span>
+</div>
+
+
